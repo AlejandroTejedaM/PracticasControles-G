@@ -14,11 +14,28 @@ namespace AppHilos.Ejercicio1
     public partial class frmEjercicio1 : Form
     {
         Thread hilo;
+        Thread hiloComprabador;
+        int xform;
+        int yform;
+        int x = 0;
+        int y = 0;
+        int xVelocidad = 5; 
+        int yVelocidad = 5;
+        int velocidadInicial = 5;
+        int distanciaDesdeCentro;
+        double anguloRebote;
+        bool enContactoConBarra = false;
         public frmEjercicio1()
         {
             InitializeComponent();
             hilo = new Thread(Movimiento);
             hilo.Start();
+
+            hiloComprabador = new Thread(ComprobarColisiones);
+            hiloComprabador.Start();
+
+            xform = this.ClientSize.Width;
+            yform = this.ClientSize.Height;
         }
 
         private delegate void delegado_mover(int x, int y);
@@ -33,38 +50,74 @@ namespace AppHilos.Ejercicio1
             }
             else
             {
-                pictureBox1.Location = new Point(x, y);
+                Pelota.Location = new Point(x, y);
             }
         }
+        private void ComprobarColisiones()
+        {
+            while (true)
+            {
+                if (Pelota.Bounds.IntersectsWith(Barra.Bounds))
+                {
+                    if (!enContactoConBarra)
+                    {
+                        Rebote();
+                        enContactoConBarra = true;
+                    }
+                }
+                else
+                {
+                    enContactoConBarra = false;
+                }
+                if (x + Pelota.Width >= xform || x <= 0)
+                {
+                    xVelocidad = -xVelocidad;
+                }
 
+                if (y <= 0)
+                {
+                    yVelocidad = -yVelocidad;
+                }
+
+                if (y + Pelota.Height >= yform)
+                {
+                    MessageBox.Show("Perdiste el juego");
+                    Environment.Exit(0);
+                }
+                Thread.Sleep(10);
+            }
+        }
         private void Movimiento()
         {
-            int x = 0;
-            int y = 0;
-            //para que se ejecute el movimiento de manera indefinida
             while (true)
             {
                 Llamar_Delegado(x, y);
-                x += 5;
-                y += 5;
-                if (pictureBox1.Bounds.IntersectsWith(pictureBox2.Bounds))
-                {
-                    x = pictureBox1.Location.X;
-                    y = pictureBox1.Location.Y;
-
-                    Thread.Sleep(100);
-                }
+                x += xVelocidad;
+                y += yVelocidad;
+                Thread.Sleep(50);
             }
+        }
+        private void Rebote()
+        {
+            distanciaDesdeCentro = Pelota.Location.X + Pelota.Width / 2 - Barra.Location.X - Barra.Width / 2;
+
+            // Calcular el ángulo de rebote en función de la posición de la barra en la que se ha producido la colisión
+            anguloRebote = distanciaDesdeCentro * Math.PI / Barra.Width;
+
+            // Cambiar la dirección de la pelota en función del ángulo de rebote
+            xVelocidad = (int)(Math.Sin(anguloRebote) * velocidadInicial);
+            yVelocidad = -1 * (int)(Math.Cos(anguloRebote) * velocidadInicial);
+
         }
         private void frmEjercicio1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Left)
             {
-                pictureBox2.Location = new Point(pictureBox2.Location.X - 10, pictureBox2.Location.Y);
+                Barra.Location = new Point(Barra.Location.X - 10, Barra.Location.Y);
             }
             if (e.KeyCode == Keys.Right)
             {
-                pictureBox2.Location = new Point(pictureBox2.Location.X + 10, pictureBox2.Location.Y);
+                Barra.Location = new Point(Barra.Location.X + 10, Barra.Location.Y);
             }
         }
 
