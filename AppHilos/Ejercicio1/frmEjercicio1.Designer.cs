@@ -47,7 +47,7 @@
             // Barra
             // 
             Barra.BackColor = Color.Orange;
-            Barra.Location = new Point(272, 354);
+            Barra.Location = new Point(264, 343);
             Barra.Margin = new Padding(2);
             Barra.Name = "Barra";
             Barra.Size = new Size(97, 19);

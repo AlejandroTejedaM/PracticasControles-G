@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -44,9 +45,6 @@ namespace AppHilos.Ejercicio1
             {
                 xVelocidad = (int)(xVelocidad * velocidadMaxima / velocidadActual);
                 yVelocidad = (int)(yVelocidad * velocidadMaxima / velocidadActual);
-
-                //xVelocidad = (int)(xVelocidad / velocidadActual);
-                //yVelocidad = (int)(yVelocidad / velocidadActual);
             }
         }
 
@@ -75,6 +73,8 @@ namespace AppHilos.Ejercicio1
                     {
                         Rebote();
                         enContactoConBarra = true;
+                        //xVelocidad = -xVelocidad;
+                        //yVelocidad = -yVelocidad;
                     }
                 }
                 else
@@ -113,6 +113,21 @@ namespace AppHilos.Ejercicio1
                 x += xVelocidad;
                 y += yVelocidad;
                 Thread.Sleep(50);
+
+                if (Pelota.Bounds.IntersectsWith(Barra.Bounds))
+                {
+                    if (!enContactoConBarra)
+                    {
+                        Rebote();
+                        enContactoConBarra = true;
+                        //xVelocidad = -xVelocidad;
+                        //yVelocidad = -yVelocidad;
+                    }
+                    else
+                    {
+                        enContactoConBarra = false;
+                    }
+                }
             }
         }
         private void Rebote()
@@ -136,16 +151,17 @@ namespace AppHilos.Ejercicio1
                 //xVelocidad = (int)(xVelocidad / velocidadActual);
                 //yVelocidad = (int)(yVelocidad / velocidadActual);
             }
+
         }
         private void frmEjercicio1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Left)
             {
-                Barra.Location = new Point(Barra.Location.X - 10, Barra.Location.Y);
+                Barra.Location = new Point(Barra.Location.X - 20, Barra.Location.Y);
             }
             if (e.KeyCode == Keys.Right)
             {
-                Barra.Location = new Point(Barra.Location.X + 10, Barra.Location.Y);
+                Barra.Location = new Point(Barra.Location.X + 20, Barra.Location.Y);
             }
         }
 
