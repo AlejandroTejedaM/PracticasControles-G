@@ -17,13 +17,15 @@ namespace AppHilos.Ejercicio1
         Thread hiloComprabador;
         int xform;
         int yform;
-        int x = 0;
-        int y = 0;
-        int xVelocidad = 5; 
+        int x = 5;
+        int y = 5;
+        int xVelocidad = 5;
         int yVelocidad = 5;
-        int velocidadInicial = 5;
+        int velocidadInicial = 10;
+        int velocidadMaxima = 10;
         int distanciaDesdeCentro;
         double anguloRebote;
+        double velocidadActual;
         bool enContactoConBarra = false;
         public frmEjercicio1()
         {
@@ -36,6 +38,16 @@ namespace AppHilos.Ejercicio1
 
             xform = this.ClientSize.Width;
             yform = this.ClientSize.Height;
+
+            velocidadActual = Math.Sqrt(Math.Pow(xVelocidad, 2) + Math.Pow(yVelocidad, 2));
+            if (velocidadActual < velocidadInicial)
+            {
+                xVelocidad = (int)(xVelocidad * velocidadMaxima / velocidadActual);
+                yVelocidad = (int)(yVelocidad * velocidadMaxima / velocidadActual);
+
+                //xVelocidad = (int)(xVelocidad / velocidadActual);
+                //yVelocidad = (int)(yVelocidad / velocidadActual);
+            }
         }
 
         private delegate void delegado_mover(int x, int y);
@@ -84,11 +96,17 @@ namespace AppHilos.Ejercicio1
                     MessageBox.Show("Perdiste el juego");
                     Environment.Exit(0);
                 }
-                Thread.Sleep(10);
+                Thread.Sleep(30);
             }
         }
         private void Movimiento()
         {
+            if (x <= 0 && y <= 0) // Verificar si la pelota está en la esquina superior izquierda
+            {
+                xVelocidad = +velocidadInicial + 1; // Cambiar la dirección horizontal
+                yVelocidad = +velocidadInicial + 1; // Cambiar la dirección vertical
+            }
+
             while (true)
             {
                 Llamar_Delegado(x, y);
@@ -99,6 +117,7 @@ namespace AppHilos.Ejercicio1
         }
         private void Rebote()
         {
+
             distanciaDesdeCentro = Pelota.Location.X + Pelota.Width / 2 - Barra.Location.X - Barra.Width / 2;
 
             // Calcular el ángulo de rebote en función de la posición de la barra en la que se ha producido la colisión
@@ -108,6 +127,15 @@ namespace AppHilos.Ejercicio1
             xVelocidad = (int)(Math.Sin(anguloRebote) * velocidadInicial);
             yVelocidad = -1 * (int)(Math.Cos(anguloRebote) * velocidadInicial);
 
+            velocidadActual = Math.Sqrt(Math.Pow(xVelocidad, 2) + Math.Pow(yVelocidad, 2));
+            if (velocidadActual < velocidadInicial)
+            {
+                xVelocidad = (int)(xVelocidad * velocidadMaxima / velocidadActual);
+                yVelocidad = (int)(yVelocidad * velocidadMaxima / velocidadActual);
+
+                //xVelocidad = (int)(xVelocidad / velocidadActual);
+                //yVelocidad = (int)(yVelocidad / velocidadActual);
+            }
         }
         private void frmEjercicio1_KeyDown(object sender, KeyEventArgs e)
         {
