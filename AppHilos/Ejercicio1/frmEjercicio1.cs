@@ -16,6 +16,7 @@ namespace AppHilos.Ejercicio1
     {
         Thread hilo;
         Thread hiloComprabador;
+        Thread hiloPuntu;
         int xform;
         int yform;
         int x = 5;
@@ -26,6 +27,7 @@ namespace AppHilos.Ejercicio1
         int velocidadMaxima = 10;
         int distanciaDesdeCentro;
         double anguloRebote;
+        int Puntuacion = 0;
         double velocidadActual;
         bool enContactoConBarra = false;
         public frmEjercicio1()
@@ -36,10 +38,12 @@ namespace AppHilos.Ejercicio1
 
             //hiloComprabador = new Thread(ComprobarColisiones);
             //hiloComprabador.Start();
+            hiloPuntu = new Thread(PuntuacionText);
+            hiloPuntu.Start();
 
             xform = this.Width;
             yform = this.Height;
-            this.Size = new Size(500, 500);
+            //this.Size = new Size(500, 500);
             velocidadActual = Math.Sqrt(Math.Pow(xVelocidad, 2) + Math.Pow(yVelocidad, 2));
             if (velocidadActual < velocidadInicial)
             {
@@ -48,19 +52,34 @@ namespace AppHilos.Ejercicio1
             }
         }
 
-        private delegate void delegado_mover(int x, int y);
+        private delegate void delegado_mover(int x, int y, int puntaje);
+        private delegate void delegado_Puntuacion(int x);
 
-        private void Llamar_Delegado(int x, int y)
+        private void Llamar_Delegado(int x, int y, int puntaje)
         {
             if (InvokeRequired)
             {
                 delegado_mover dm = new delegado_mover(Llamar_Delegado);
-                object[] p = new object[] { x, y };
+                object[] p = new object[] { x, y, puntaje };
                 Invoke(dm, p);
             }
             else
             {
                 Pelota.Location = new Point(x, y);
+                //txtPuntaje.Text = puntaje.ToString();
+            }
+        }
+        private void LLamar_DelegadoPuntaje(int x)
+        {
+            if (InvokeRequired)
+            {
+                delegado_Puntuacion dm = new delegado_Puntuacion(LLamar_DelegadoPuntaje);
+                object[] p = new object[] { x };
+                Invoke(dm, p);
+            }
+            else
+            {
+                txtPuntaje.Text = Puntuacion.ToString();
             }
         }
         private void ComprobarColisiones()
@@ -109,7 +128,7 @@ namespace AppHilos.Ejercicio1
 
             while (true)
             {
-                Llamar_Delegado(x, y);
+                Llamar_Delegado(x, y, Puntuacion);
                 x += xVelocidad;
                 y += yVelocidad;
                 Thread.Sleep(50);
@@ -145,7 +164,33 @@ namespace AppHilos.Ejercicio1
                 }
             }
         }
-
+        public void PuntuacionText()
+        {
+            //while (true)
+            //{
+                if (Pelota.Bounds.IntersectsWith(Cubito1.Bounds))
+                {
+                    Cubito1.Dispose();
+                    //LLamar_DelegadoPuntaje(Puntuacion);
+                }
+                if (Pelota.Bounds.IntersectsWith(Cubito2.Bounds))
+                {
+                    Cubito2.Dispose();
+                    //LLamar_DelegadoPuntaje(Puntuacion);
+                }
+                if (Pelota.Bounds.IntersectsWith(Cubito3.Bounds))
+                {
+                    Cubito3.Dispose();
+                    //LLamar_DelegadoPuntaje(Puntuacion);
+                }
+                if (Pelota.Bounds.IntersectsWith(Cubito4.Bounds))
+                {
+                    Cubito4.Dispose();
+                    //LLamar_DelegadoPuntaje(Puntuacion);
+                }
+                Thread.Sleep(100);
+            //}
+        }
         public void MetodoProfe()
         {
             Random r = new Random();
@@ -156,9 +201,14 @@ namespace AppHilos.Ejercicio1
             int dificultad = 50;
             bool subir = false;
             bool derecha = false;
+            bool chocado1 = false;
+            bool chocado2 = false;
+            bool chocado3 = false;
+            bool chocado4 = false;
+            //txtPuntaje.Text = Puntuacion.ToString();
             while (true)
             {
-                Llamar_Delegado(x, y);
+                Llamar_Delegado(x, y, Puntuacion);
                 if (subir == false)
                 {
                     y += ay;
@@ -166,17 +216,62 @@ namespace AppHilos.Ejercicio1
                     {
                         subir = !subir;
                         ay = r.Next(5, 15);
-                        dificultad -= 5;
+                        dificultad -= 00001;
                     }
-                    if (Pelota.Bounds.IntersectsWith(pictureBox1.Bounds))
+                    if (Pelota.Bounds.IntersectsWith(Cubito1.Bounds))
                     {
-                        pictureBox1.Dispose();
+                        if (!chocado1)
+                        {
+                            Puntuacion++;
+                            Cubito1.Dispose();
+                            LLamar_DelegadoPuntaje(Puntuacion);
+                            chocado1 = true;
+                        }
+                    }
+
+                    if (Pelota.Bounds.IntersectsWith(Cubito2.Bounds))
+                    {
+                        if (!chocado2)
+                        {
+                            Puntuacion++;
+                            Cubito2.Dispose();
+                            LLamar_DelegadoPuntaje(Puntuacion);
+                            chocado2 = true;
+                        }
+                        ////Puntuacion += 1;
+                    }
+                    if (Pelota.Bounds.IntersectsWith(Cubito3.Bounds))
+                    {
+                        if (!chocado3)
+                        {
+                            Puntuacion++;
+                            Cubito3.Dispose();
+                            LLamar_DelegadoPuntaje(Puntuacion);
+                            chocado3 = true;
+                        }
+                        ////Puntuacion++;
+                    }
+                    if (Pelota.Bounds.IntersectsWith(Cubito4.Bounds))
+                    {
+                        if (!chocado4)
+                        {
+                            Puntuacion++;
+                            Cubito4.Dispose();
+                            LLamar_DelegadoPuntaje(Puntuacion);
+                            chocado4 = true;
+                        }
+                        ////Puntuacion++;
+                    }
+                    if (Puntuacion == 4)
+                    {
+                        MessageBox.Show("GANASTE");
+                        Environment.Exit(0);
                     }
                     //contador de cuantos se destruyo
                     //si se dstruyen todos ya ganaste
                     if (Pelota.Location.Y + Pelota.Height >= this.Height)
                     {
-                        MessageBox.Show("Sopas");
+                        MessageBox.Show("Tan tan");
                         Environment.Exit(0);
                     }
                 }
@@ -207,7 +302,7 @@ namespace AppHilos.Ejercicio1
                         ax = r.Next(5, 15);
                     }
                 }
-                Thread.Sleep(dificultad);
+                Thread.Sleep(50);
             }
         }
         private void Rebote()

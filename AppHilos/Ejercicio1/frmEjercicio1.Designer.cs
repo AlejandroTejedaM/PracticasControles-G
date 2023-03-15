@@ -30,26 +30,28 @@
         {
             Pelota = new PictureBox();
             Barra = new PictureBox();
-            pictureBox1 = new PictureBox();
-            pictureBox2 = new PictureBox();
-            pictureBox3 = new PictureBox();
-            pictureBox4 = new PictureBox();
+            Cubito1 = new PictureBox();
+            Cubito2 = new PictureBox();
+            Cubito3 = new PictureBox();
+            Cubito4 = new PictureBox();
+            label1 = new Label();
+            txtPuntaje = new Label();
             ((System.ComponentModel.ISupportInitialize)Pelota).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Barra).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Cubito1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Cubito2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Cubito3).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Cubito4).BeginInit();
             SuspendLayout();
             // 
             // Pelota
             // 
             Pelota.BackColor = Color.Black;
             Pelota.BorderStyle = BorderStyle.Fixed3D;
-            Pelota.Location = new Point(271, 359);
-            Pelota.Margin = new Padding(2, 3, 2, 3);
+            Pelota.Location = new Point(237, 269);
+            Pelota.Margin = new Padding(2);
             Pelota.Name = "Pelota";
-            Pelota.Size = new Size(35, 35);
+            Pelota.Size = new Size(31, 27);
             Pelota.TabIndex = 0;
             Pelota.TabStop = false;
             // 
@@ -58,81 +60,108 @@
             Barra.BackColor = SystemColors.ControlDarkDark;
             Barra.BackgroundImageLayout = ImageLayout.Stretch;
             Barra.BorderStyle = BorderStyle.Fixed3D;
-            Barra.Location = new Point(302, 457);
-            Barra.Margin = new Padding(2, 3, 2, 3);
+            Barra.Location = new Point(264, 343);
+            Barra.Margin = new Padding(2);
             Barra.Name = "Barra";
-            Barra.Size = new Size(111, 25);
+            Barra.Size = new Size(98, 20);
             Barra.TabIndex = 1;
             Barra.TabStop = false;
             // 
-            // pictureBox1
+            // Cubito1
             // 
-            pictureBox1.BackColor = Color.IndianRed;
-            pictureBox1.Location = new Point(42, 32);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(125, 36);
-            pictureBox1.TabIndex = 2;
-            pictureBox1.TabStop = false;
+            Cubito1.BackColor = Color.IndianRed;
+            Cubito1.Location = new Point(37, 24);
+            Cubito1.Margin = new Padding(3, 2, 3, 2);
+            Cubito1.Name = "Cubito1";
+            Cubito1.Size = new Size(109, 27);
+            Cubito1.TabIndex = 2;
+            Cubito1.TabStop = false;
             // 
-            // pictureBox2
+            // Cubito2
             // 
-            pictureBox2.BackColor = Color.IndianRed;
-            pictureBox2.Location = new Point(212, 32);
-            pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(125, 36);
-            pictureBox2.TabIndex = 3;
-            pictureBox2.TabStop = false;
+            Cubito2.BackColor = Color.IndianRed;
+            Cubito2.Location = new Point(186, 24);
+            Cubito2.Margin = new Padding(3, 2, 3, 2);
+            Cubito2.Name = "Cubito2";
+            Cubito2.Size = new Size(109, 27);
+            Cubito2.TabIndex = 3;
+            Cubito2.TabStop = false;
             // 
-            // pictureBox3
+            // Cubito3
             // 
-            pictureBox3.BackColor = Color.IndianRed;
-            pictureBox3.Location = new Point(408, 32);
-            pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(125, 36);
-            pictureBox3.TabIndex = 4;
-            pictureBox3.TabStop = false;
+            Cubito3.BackColor = Color.IndianRed;
+            Cubito3.Location = new Point(357, 24);
+            Cubito3.Margin = new Padding(3, 2, 3, 2);
+            Cubito3.Name = "Cubito3";
+            Cubito3.Size = new Size(109, 27);
+            Cubito3.TabIndex = 4;
+            Cubito3.TabStop = false;
             // 
-            // pictureBox4
+            // Cubito4
             // 
-            pictureBox4.BackColor = Color.IndianRed;
-            pictureBox4.Location = new Point(598, 32);
-            pictureBox4.Name = "pictureBox4";
-            pictureBox4.Size = new Size(125, 36);
-            pictureBox4.TabIndex = 5;
-            pictureBox4.TabStop = false;
+            Cubito4.BackColor = Color.IndianRed;
+            Cubito4.Location = new Point(523, 24);
+            Cubito4.Margin = new Padding(3, 2, 3, 2);
+            Cubito4.Name = "Cubito4";
+            Cubito4.Size = new Size(109, 27);
+            Cubito4.TabIndex = 5;
+            Cubito4.TabStop = false;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(490, 386);
+            label1.Name = "label1";
+            label1.Size = new Size(50, 15);
+            label1.TabIndex = 6;
+            label1.Text = "Puntaje:";
+            // 
+            // txtPuntaje
+            // 
+            txtPuntaje.AutoSize = true;
+            txtPuntaje.Location = new Point(553, 387);
+            txtPuntaje.Name = "txtPuntaje";
+            txtPuntaje.Size = new Size(38, 15);
+            txtPuntaje.TabIndex = 7;
+            txtPuntaje.Text = "label2";
             // 
             // frmEjercicio1
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(749, 547);
-            Controls.Add(pictureBox4);
-            Controls.Add(pictureBox3);
-            Controls.Add(pictureBox2);
-            Controls.Add(pictureBox1);
+            ClientSize = new Size(655, 410);
+            Controls.Add(txtPuntaje);
+            Controls.Add(label1);
+            Controls.Add(Cubito4);
+            Controls.Add(Cubito3);
+            Controls.Add(Cubito2);
+            Controls.Add(Cubito1);
             Controls.Add(Barra);
             Controls.Add(Pelota);
-            Margin = new Padding(2, 3, 2, 3);
+            Margin = new Padding(2);
             Name = "frmEjercicio1";
             Text = "frmEjercicio1";
             FormClosing += frmEjercicio1_FormClosing;
             KeyDown += frmEjercicio1_KeyDown;
             ((System.ComponentModel.ISupportInitialize)Pelota).EndInit();
             ((System.ComponentModel.ISupportInitialize)Barra).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Cubito1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Cubito2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Cubito3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Cubito4).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
         private PictureBox Pelota;
         private PictureBox Barra;
-        private PictureBox pictureBox1;
-        private PictureBox pictureBox2;
-        private PictureBox pictureBox3;
-        private PictureBox pictureBox4;
+        private PictureBox Cubito1;
+        private PictureBox Cubito2;
+        private PictureBox Cubito3;
+        private PictureBox Cubito4;
+        private Label label1;
+        private Label txtPuntaje;
     }
 }
