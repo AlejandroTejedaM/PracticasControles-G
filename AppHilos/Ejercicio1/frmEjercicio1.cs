@@ -38,8 +38,8 @@ namespace AppHilos.Ejercicio1
 
             //hiloComprabador = new Thread(ComprobarColisiones);
             //hiloComprabador.Start();
-            hiloPuntu = new Thread(PuntuacionText);
-            hiloPuntu.Start();
+            //hiloPuntu = new Thread(PuntuacionText);
+            //hiloPuntu.Start();
 
             xform = this.Width;
             yform = this.Height;
@@ -168,34 +168,34 @@ namespace AppHilos.Ejercicio1
         {
             //while (true)
             //{
-                if (Pelota.Bounds.IntersectsWith(Cubito1.Bounds))
-                {
-                    Cubito1.Dispose();
-                    //LLamar_DelegadoPuntaje(Puntuacion);
-                }
-                if (Pelota.Bounds.IntersectsWith(Cubito2.Bounds))
-                {
-                    Cubito2.Dispose();
-                    //LLamar_DelegadoPuntaje(Puntuacion);
-                }
-                if (Pelota.Bounds.IntersectsWith(Cubito3.Bounds))
-                {
-                    Cubito3.Dispose();
-                    //LLamar_DelegadoPuntaje(Puntuacion);
-                }
-                if (Pelota.Bounds.IntersectsWith(Cubito4.Bounds))
-                {
-                    Cubito4.Dispose();
-                    //LLamar_DelegadoPuntaje(Puntuacion);
-                }
-                Thread.Sleep(100);
+            if (Pelota.Bounds.IntersectsWith(Cubito1.Bounds))
+            {
+                Cubito1.Dispose();
+                //LLamar_DelegadoPuntaje(Puntuacion);
+            }
+            if (Pelota.Bounds.IntersectsWith(Cubito2.Bounds))
+            {
+                Cubito2.Dispose();
+                //LLamar_DelegadoPuntaje(Puntuacion);
+            }
+            if (Pelota.Bounds.IntersectsWith(Cubito3.Bounds))
+            {
+                Cubito3.Dispose();
+                //LLamar_DelegadoPuntaje(Puntuacion);
+            }
+            if (Pelota.Bounds.IntersectsWith(Cubito4.Bounds))
+            {
+                Cubito4.Dispose();
+                //LLamar_DelegadoPuntaje(Puntuacion);
+            }
+            Thread.Sleep(100);
             //}
         }
         public void MetodoProfe()
         {
             Random r = new Random();
-            int x = 271;
-            int y = 359;
+            int x = 353;
+            int y = 113;
             int ax = 5;
             int ay = 5;
             int dificultad = 50;
@@ -220,10 +220,10 @@ namespace AppHilos.Ejercicio1
                     }
                     if (Pelota.Bounds.IntersectsWith(Cubito1.Bounds))
                     {
+                        Cubito1.Dispose();
                         if (!chocado1)
                         {
                             Puntuacion++;
-                            Cubito1.Dispose();
                             LLamar_DelegadoPuntaje(Puntuacion);
                             chocado1 = true;
                         }
@@ -231,21 +231,20 @@ namespace AppHilos.Ejercicio1
 
                     if (Pelota.Bounds.IntersectsWith(Cubito2.Bounds))
                     {
+                        Cubito2.Dispose();
                         if (!chocado2)
                         {
                             Puntuacion++;
-                            Cubito2.Dispose();
                             LLamar_DelegadoPuntaje(Puntuacion);
                             chocado2 = true;
                         }
-                        ////Puntuacion += 1;
                     }
                     if (Pelota.Bounds.IntersectsWith(Cubito3.Bounds))
                     {
+                        Cubito3.Dispose();
                         if (!chocado3)
                         {
                             Puntuacion++;
-                            Cubito3.Dispose();
                             LLamar_DelegadoPuntaje(Puntuacion);
                             chocado3 = true;
                         }
@@ -253,10 +252,10 @@ namespace AppHilos.Ejercicio1
                     }
                     if (Pelota.Bounds.IntersectsWith(Cubito4.Bounds))
                     {
+                        Cubito4.Dispose();
                         if (!chocado4)
                         {
                             Puntuacion++;
-                            Cubito4.Dispose();
                             LLamar_DelegadoPuntaje(Puntuacion);
                             chocado4 = true;
                         }
@@ -282,6 +281,54 @@ namespace AppHilos.Ejercicio1
                     {
                         subir = !subir;
                         ay = r.Next(5, 15);
+                    }
+                    if (Pelota.Bounds.IntersectsWith(Cubito1.Bounds))
+                    {
+                        Cubito1.Dispose();
+                        if (!chocado1)
+                        {
+                            Puntuacion++;
+                            LLamar_DelegadoPuntaje(Puntuacion);
+                            chocado1 = true;
+                        }
+                    }
+
+                    if (Pelota.Bounds.IntersectsWith(Cubito2.Bounds))
+                    {
+                        Cubito2.Dispose();
+                        if (!chocado2)
+                        {
+                            Puntuacion++;
+                            LLamar_DelegadoPuntaje(Puntuacion);
+                            chocado2 = true;
+                        }
+                    }
+                    if (Pelota.Bounds.IntersectsWith(Cubito3.Bounds))
+                    {
+                        Cubito3.Dispose();
+                        if (!chocado3)
+                        {
+                            Puntuacion++;
+                            LLamar_DelegadoPuntaje(Puntuacion);
+                            chocado3 = true;
+                        }
+                        ////Puntuacion++;
+                    }
+                    if (Pelota.Bounds.IntersectsWith(Cubito4.Bounds))
+                    {
+                        Cubito4.Dispose();
+                        if (!chocado4)
+                        {
+                            Puntuacion++;
+                            LLamar_DelegadoPuntaje(Puntuacion);
+                            chocado4 = true;
+                        }
+                        ////Puntuacion++;
+                    }
+                    if (Puntuacion == 4)
+                    {
+                        MessageBox.Show("GANASTE");
+                        Environment.Exit(0);
                     }
                 }
                 if (derecha)
