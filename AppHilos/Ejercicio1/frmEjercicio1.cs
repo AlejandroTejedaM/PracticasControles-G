@@ -31,15 +31,15 @@ namespace AppHilos.Ejercicio1
         public frmEjercicio1()
         {
             InitializeComponent();
-            hilo = new Thread(Movimiento);
+            hilo = new Thread(MetodoProfe);
             hilo.Start();
 
-            hiloComprabador = new Thread(ComprobarColisiones);
-            hiloComprabador.Start();
+            //hiloComprabador = new Thread(ComprobarColisiones);
+            //hiloComprabador.Start();
 
-            xform = this.ClientSize.Width;
-            yform = this.ClientSize.Height;
-
+            xform = this.Width;
+            yform = this.Height;
+            this.Size = new Size(500, 500);
             velocidadActual = Math.Sqrt(Math.Pow(xVelocidad, 2) + Math.Pow(yVelocidad, 2));
             if (velocidadActual < velocidadInicial)
             {
@@ -93,7 +93,7 @@ namespace AppHilos.Ejercicio1
 
                 if (y + Pelota.Height >= yform)
                 {
-                    MessageBox.Show("Perdiste el juego");
+                    MessageBox.Show("Pi pi pi pi pi...... tan tan");
                     Environment.Exit(0);
                 }
                 Thread.Sleep(30);
@@ -128,11 +128,91 @@ namespace AppHilos.Ejercicio1
                         enContactoConBarra = false;
                     }
                 }
+                if (x + Pelota.Width >= xform || x <= 0)
+                {
+                    xVelocidad = -xVelocidad;
+                }
+
+                if (y <= 0)
+                {
+                    yVelocidad = -yVelocidad;
+                }
+
+                if (y + Pelota.Height >= yform)
+                {
+                    MessageBox.Show("Perdiste el juego");
+                    Environment.Exit(0);
+                }
+            }
+        }
+
+        public void MetodoProfe()
+        {
+            Random r = new Random();
+            int x = 271;
+            int y = 359;
+            int ax = 5;
+            int ay = 5;
+            int dificultad = 50;
+            bool subir = false;
+            bool derecha = false;
+            while (true)
+            {
+                Llamar_Delegado(x, y);
+                if (subir == false)
+                {
+                    y += ay;
+                    if (Pelota.Bounds.IntersectsWith(Barra.Bounds))
+                    {
+                        subir = !subir;
+                        ay = r.Next(5, 15);
+                        dificultad -= 5;
+                    }
+                    if (Pelota.Bounds.IntersectsWith(pictureBox1.Bounds))
+                    {
+                        pictureBox1.Dispose();
+                    }
+                    //contador de cuantos se destruyo
+                    //si se dstruyen todos ya ganaste
+                    if (Pelota.Location.Y + Pelota.Height >= this.Height)
+                    {
+                        MessageBox.Show("Sopas");
+                        Environment.Exit(0);
+                    }
+                }
+                if (subir)
+                {
+                    y -= ay;
+                    if (Pelota.Location.Y <= 0)
+                    {
+                        subir = !subir;
+                        ay = r.Next(5, 15);
+                    }
+                }
+                if (derecha)
+                {
+                    x += ax;
+                    if (Pelota.Location.X + Pelota.Width >= this.Width)
+                    {
+                        derecha = !derecha;
+                        ax = r.Next(5, 15);
+                    }
+                }
+                if (!derecha)
+                {
+                    x -= ax;
+                    if (Pelota.Location.X <= 0)
+                    {
+                        derecha = !derecha;
+                        ax = r.Next(5, 15);
+                    }
+                }
+                Thread.Sleep(dificultad);
             }
         }
         private void Rebote()
         {
-
+            //Calcula la posicion de
             distanciaDesdeCentro = Pelota.Location.X + Pelota.Width / 2 - Barra.Location.X - Barra.Width / 2;
 
             // Calcular el ángulo de rebote en función de la posición de la barra en la que se ha producido la colisión
@@ -147,9 +227,6 @@ namespace AppHilos.Ejercicio1
             {
                 xVelocidad = (int)(xVelocidad * velocidadMaxima / velocidadActual);
                 yVelocidad = (int)(yVelocidad * velocidadMaxima / velocidadActual);
-
-                //xVelocidad = (int)(xVelocidad / velocidadActual);
-                //yVelocidad = (int)(yVelocidad / velocidadActual);
             }
 
         }
