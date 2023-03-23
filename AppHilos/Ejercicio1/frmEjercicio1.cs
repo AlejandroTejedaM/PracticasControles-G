@@ -32,11 +32,23 @@ namespace AppHilos.Ejercicio1
         double velocidadActual;
         bool enContactoConBarra = false;
         int auxTamPos = 0;
-        int tamanio = 70;
+        int tamaniox = 125;
+        int tamanioy = 25;
+        int posx = 15;
+        int posy = 10;
         public frmEjercicio1()
         {
             InitializeComponent();
-            AgregarBloques();
+            for (int i = 1; i <= 16; i++)
+            {
+                AgregarBloques(tamaniox, tamanioy);
+                if (i % 4 == 0)
+                {
+                    posy += tamanioy + 10;
+                    posx = 15;
+                }
+                
+            }
             Puntuacion = 0;
             txtPuntaje.Text = Puntuacion.ToString();
             hilo = new Thread(MetodoProfe);
@@ -190,54 +202,44 @@ namespace AppHilos.Ejercicio1
             }
         }
         #endregion
-        private void AgregarBloques()
+        private void AgregarBloques(int tx, int ty)
         {
-            int tamaniox = 155;
-            int tamanioy = 25;
-            int posx = 10;
-            int posy = 10;
+            int tamaniox = tx;
+            int tamanioy = ty;
 
-            for (int i = 1; i <= 16; i++)
+            PictureBox picture = new PictureBox();
+            picture.BorderStyle = BorderStyle.Fixed3D;
+            Block block = new Block();
+            block.Tipo = "bloque";
+            int a = new Random().Next(1, 4);
+            switch (a)
             {
-                PictureBox picture = new PictureBox();
-                picture.BorderStyle = BorderStyle.Fixed3D;
-                Block block = new Block();
-                block.Tipo = "bloque";
-                int a = new Random().Next(1, 4);
-                switch (a)
-                {
-                    case 1:
-                        block.Puntos = 1;
-                        block.Color = Color.Blue;
-                        break;
+                case 1:
+                    block.Puntos = 1;
+                    block.Color = Color.Blue;
+                    break;
 
-                    case 2:
-                        block.Puntos = 2;
-                        block.Color = Color.Orange;
-                        break;
-                    case 3:
-                        block.Puntos = 3;
-                        block.Color = Color.Red;
-                        break;
+                case 2:
+                    block.Puntos = 2;
+                    block.Color = Color.Orange;
+                    break;
+                case 3:
+                    block.Puntos = 3;
+                    block.Color = Color.Red;
+                    break;
 
-                    default:
-                        block.Puntos = 0;
-                        block.Color = Color.Black;
-                        break;
+                default:
+                    block.Puntos = 0;
+                    block.Color = Color.Black;
+                    break;
 
-                }
-                picture.Size = new Size(tamaniox, tamanioy);
-                picture.Location = new Point(posx, posy);
-                picture.BackColor = block.Color;
-                picture.Tag = block;
-                Controls.Add(picture);
-                posx += tamaniox + 10;
-                if (i % 4 == 0)
-                {
-                    posy += tamanioy + 10;
-                    posx = 10;
-                }
             }
+            picture.Size = new Size(tamaniox, tamanioy);
+            picture.Location = new Point(posx, posy);
+            picture.BackColor = block.Color;
+            picture.Tag = block;
+            Controls.Add(picture);
+            posx += tamaniox + 10;
         }
 
         public void MetodoProfe()
@@ -349,7 +351,7 @@ namespace AppHilos.Ejercicio1
                 Thread.Sleep(50);
             }
         }
-      
+
         private void frmEjercicio1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Left)
